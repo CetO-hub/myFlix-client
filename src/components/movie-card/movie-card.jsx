@@ -1,5 +1,5 @@
 import React from "react";
 
-export const MovieCard = ({ movies }) => {
-  return <div>{movies.Title}</div>;
+export const MovieCard = ({ movies, onMovieClick }) => {
+  return <div onClick={() => onMovieClick(movies)}>{movies.Title}</div>;
 };

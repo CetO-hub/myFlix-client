@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import { MovieCard } from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([
@@ -19,7 +20,8 @@ export const MainView = () => {
         Birth: "1973",
         Death: "n/A",
       },
-      ImagePath: "looper.png",
+      ImagePath:
+        "http://4.bp.blogspot.com/-NXE_nmQPNMw/VPYhK8r27fI/AAAAAAAABZ4/CJB_lI--xiU/s1600/Looper.jpg",
       Featured: true,
     },
     {
@@ -38,7 +40,8 @@ export const MainView = () => {
         Birth: "1944",
         Death: "2017",
       },
-      ImagePath: "silenceofthelambs.png",
+      ImagePath:
+        "http://posterwire.com/wp-content/uploads/silence_of_the_lambs.jpg",
       Featured: true,
     },
     {
@@ -57,10 +60,22 @@ export const MainView = () => {
         Birth: "1954",
         Death: "n/A",
       },
-      ImagePath: "avatar.png",
+      ImagePath:
+        "https://www.suzimcalpine.com/wp-content/uploads/2014/03/stephen_lang_avatar_wallpaper-wide.jpg",
       Featured: true,
     },
   ]);
+
+  const [movieSelected, setMovieSelected] = useState(null);
+
+  if (movieSelected) {
+    return (
+      <MovieView
+        movieSelected={movieSelected}
+        onBackClick={() => setMovieSelected(null)}
+      />
+    );
+  }
 
   if (movies.length === 0) {
     return <div>List is empty</div>;
@@ -69,7 +84,15 @@ export const MainView = () => {
   return (
     <>
       {movies.map((movie) => {
-        return <MovieCard key={movie.id} movies={movie} />;
+        return (
+          <MovieCard
+            key={movie.id}
+            movies={movie}
+            onMovieClick={(newMovieSelected) => {
+              setMovieSelected(newMovieSelected);
+            }}
+          />
+        );
       })}
     </>
   );
