@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { CONSTANTS } from "../../constants";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ export const SignupView = () => {
       Birthday: birthday,
     };
 
-    fetch("https://my-flix-movie.herokuapp.com/users", {
+    fetch(`${CONSTANTS.API_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

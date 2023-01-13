@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+import { CONSTANTS } from "../../constants";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -17,20 +18,15 @@ export const MainView = () => {
       return;
     }
 
-    fetch("https://my-flix-movie.herokuapp.com/movies", {
+    fetch(`${CONSTANTS.API_URL}/movies`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
         const fetchedMovies = data.map((movie) => {
           return {
+            ...movie,
             id: movie._id,
-            Title: movie.Title,
-            Description: movie.Description,
-            Genre: movie.Genre,
-            Director: movie.Director,
-            ImagePath: movie.ImagePath,
-            Featured: movie.Featured,
           };
         });
         setMovies(fetchedMovies);

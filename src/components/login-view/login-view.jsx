@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
+import { CONSTANTS } from "../../constants";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -13,7 +14,7 @@ export const LoginView = ({ onLoggedIn }) => {
       Password: password,
     };
 
-    fetch("https://my-flix-movie.herokuapp.com/login", {
+    fetch(`${CONSTANTS.API_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
