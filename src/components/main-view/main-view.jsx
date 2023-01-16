@@ -6,6 +6,7 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -70,7 +71,8 @@ export const MainView = () => {
               </Col>
             );
           })}
-          <button
+          <Button
+            variant="primary"
             onClick={() => {
               setUser(null);
               setToken(null);
@@ -78,7 +80,7 @@ export const MainView = () => {
             }}
           >
             Logout
-          </button>
+          </Button>
         </>
       )}
     </Row>

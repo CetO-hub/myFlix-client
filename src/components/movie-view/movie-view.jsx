@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
 
 export const MovieView = ({ movieSelected, onBackClick }) => {
   return (
@@ -39,7 +40,9 @@ export const MovieView = ({ movieSelected, onBackClick }) => {
         <span>Directror-Death: </span>
         <span>{movieSelected.Director.Death}</span>
       </div>
-      <button onClick={onBackClick}>Back</button>
+      <Button variant="primary" onClick={onBackClick}>
+        Back
+      </Button>
     </>
   );
 };
