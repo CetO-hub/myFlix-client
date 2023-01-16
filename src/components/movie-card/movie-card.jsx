@@ -6,6 +6,7 @@ export const MovieCard = ({ movies, onMovieClick }) => {
   return (
     <>
       <Card
+        className="h-100"
         onClick={() => {
           onMovieClick(movies);
         }}
