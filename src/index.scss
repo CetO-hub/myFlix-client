@@ -1,5 +1,7 @@
-$color: steelblue;
+$font-family-base: "Roboto", sans-serif;
+$display-font-sizes: (
+  6: 2rem,
+);
+$line-height-base: 1.7;
 
-.my-flix {
-  color: $color;
-}
+@import "~bootstrap/scss/bootstrap";

@@ -1,45 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
 
 export const MovieView = ({ movieSelected, onBackClick }) => {
   return (
     <>
       <div>
-        <img src={movieSelected.ImagePath} height="500px" />
+        <img src={movieSelected.ImagePath} className="w-100" />
       </div>
       <div>
-        <span>Title: </span>
+        <span className="fw-bold">Title: </span>
         <span>{movieSelected.Title}</span>
       </div>
       <div>
-        <span>Description: </span>
+        <span className="fw-bold">Description: </span>
         <span>{movieSelected.Description}</span>
       </div>
       <div>
-        <span>Genre: </span>
+        <span className="fw-bold">Genre: </span>
         <span>{movieSelected.Genre.Name}</span>
       </div>
       <div>
-        <span>Genre-Description: </span>
+        <span className="fw-bold">Genre-Description: </span>
         <span>{movieSelected.Genre.Description}</span>
       </div>
       <div>
-        <span>Directror: </span>
+        <span className="fw-bold">Directror: </span>
         <span>{movieSelected.Director.Name}</span>
       </div>
       <div>
-        <span>Directror-Bio: </span>
+        <span className="fw-bold">Directror-Bio: </span>
         <span>{movieSelected.Director.Bio}</span>
       </div>
       <div>
-        <span>Directror-Birth: </span>
+        <span className="fw-bold">Directror-Birth: </span>
         <span>{movieSelected.Director.Birth}</span>
       </div>
       <div>
-        <span>Directror-Death: </span>
+        <span className="fw-bold">Directror-Death: </span>
         <span>{movieSelected.Director.Death}</span>
       </div>
-      <button onClick={onBackClick}>Back</button>
+      <Button variant="primary" onClick={onBackClick}>
+        Back
+      </Button>
     </>
   );
 };
