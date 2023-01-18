@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,50 +7,84 @@ import { BsFillPencilFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 
 export const ProfileView = ({ user }) => {
+  const [newUsername, setNewUsername] = useState(user.Username);
+  const [newPassword, setNewPassword] = useState("*****");
+  const [newEmail, setNewEmail] = useState(user.Email);
+  const [newBirthday, setNewBirthday] = useState(
+    new Date(user.Birthday).toLocaleString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+  );
+
+  // Global variables
+
   const favoriteMovies = user.FavoriteMovies;
-  console.log(user);
-  let birthday;
 
-  if (user.Birthday) {
-    date = new Date(user.Birthday);
-    birthday = date.toLocaleString([], { dateStyle: "short" });
-  } else {
-    birthday = "No birthday entered";
-  }
+  const username = useRef();
+  const password = useRef();
+  const email = useRef();
+  const birthday = useRef();
 
-  const handleClick = (e) => {
-    e.stopPropagation();
-    console.log(e.target.id);
+  const removeReadOnly = (ref) => {
+    switch (ref) {
+      case "username":
+        username.current.disabled = false;
+        username.current.focus();
+        break;
+      case "password":
+        password.current.disabled = false;
+        password.current.focus();
+        break;
+      case "email":
+        email.current.disabled = false;
+        email.current.focus();
+        break;
+      case "birthday":
+        birthday.current.disabled = false;
+        birthday.current.focus();
+        break;
+    }
+  };
+
+  // Update data in data bank
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted");
   };
 
   return (
     <>
       <h1 className="my-5">Account Information</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label className="fw-bold" column sm="2">
             Username:
           </Form.Label>
-          <Col style={{ "max-width": "max-content" }}>
-            <Form.Control plaintext readOnly defaultValue={user.Username} />
+          <Col md={4}>
+            <Form.Control
+              type="text"
+              ref={username}
+              disabled={true}
+              value={newUsername}
+              onInput={(e) => {
+                setNewUsername(e.target.value);
+              }}
+            />
           </Col>
           <Col md={2}>
             <Button
-              id="Username"
               variant="Light"
               style={{
                 cursor: "pointer",
               }}
-              onClick={(e) => {
-                handleClick(e);
+              onClick={() => {
+                removeReadOnly("username");
               }}
             >
-              <BsFillPencilFill
-                size={20}
-                style={{
-                  "pointer-events": "none",
-                }}
-              />
+              <BsFillPencilFill size={20} />
             </Button>
           </Col>
         </Form.Group>
@@ -59,31 +93,28 @@ export const ProfileView = ({ user }) => {
           <Form.Label className="fw-bold" column sm="2">
             Password:
           </Form.Label>
-          <Col style={{ "max-width": "max-content" }}>
+          <Col md={4}>
             <Form.Control
+              ref={password}
               type="password"
-              plaintext
-              readOnly
-              defaultValue="******"
+              disabled={true}
+              value={newPassword}
+              onInput={(e) => {
+                setNewPassword(e.target.value);
+              }}
             />
           </Col>
           <Col md={2}>
             <Button
-              id="Password"
               variant="Light"
               style={{
                 cursor: "pointer",
               }}
-              onClick={(e) => {
-                handleClick(e);
+              onClick={() => {
+                removeReadOnly("password");
               }}
             >
-              <BsFillPencilFill
-                size={20}
-                style={{
-                  "pointer-events": "none",
-                }}
-              />
+              <BsFillPencilFill size={20} />
             </Button>
           </Col>
         </Form.Group>
@@ -92,62 +123,66 @@ export const ProfileView = ({ user }) => {
           <Form.Label className="fw-bold" column sm="2">
             Email:
           </Form.Label>
-          <Col style={{ "max-width": "max-content" }}>
+          <Col md={4}>
             <Form.Control
+              ref={email}
               type="email"
-              plaintext
-              readOnly
-              defaultValue={user.Email}
+              disabled={true}
+              value={newEmail}
+              onInput={(e) => {
+                setNewEmail(e.target.value);
+              }}
             />
           </Col>
           <Col md={2}>
             <Button
-              id="Email"
               variant="Light"
               style={{
                 cursor: "pointer",
               }}
               onClick={(e) => {
-                handleClick(e);
+                removeReadOnly("email");
               }}
             >
-              <BsFillPencilFill
-                size={20}
-                style={{
-                  "pointer-events": "none",
-                }}
-              />
+              <BsFillPencilFill size={20} />
             </Button>
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
+        <Form.Group as={Row} className="mb-5">
           <Form.Label className="fw-bold" column sm="2">
             Birthday:
           </Form.Label>
-          <Col style={{ "max-width": "max-content" }}>
-            <Form.Control plaintext readOnly defaultValue={birthday} />
+          <Col md={4}>
+            <Form.Control
+              ref={birthday}
+              type="date"
+              disabled={true}
+              value={newBirthday}
+              onInput={(e) => {
+                setNewBirthday(e.target.value);
+              }}
+            />
           </Col>
           <Col md={2}>
             <Button
-              id="Birthday"
               variant="Light"
               style={{
                 cursor: "pointer",
               }}
               onClick={(e) => {
-                handleClick(e);
+                removeReadOnly("birthday");
               }}
             >
-              <BsFillPencilFill
-                size={20}
-                style={{
-                  "pointer-events": "none",
-                }}
-              />
+              <BsFillPencilFill size={20} />
             </Button>
           </Col>
         </Form.Group>
+        <Row className="text-center">
+          <Col md={6}>
+            <Button type="submit">Save</Button>
+          </Col>
+        </Row>
       </Form>
 
       <h1 className="my-5">Favorite Movies</h1>
