@@ -53,20 +53,22 @@ export const MovieView = ({ movies }) => {
   );
 };
 
-MovieView.propTypes = {
-  movieSelected: PropTypes.shape({
-    id: PropTypes.string,
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string,
+MovieView.propTypes = [
+  {
+    movies: PropTypes.shape({
+      id: PropTypes.string,
+      Title: PropTypes.string.isRequired,
       Description: PropTypes.string,
-    }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string,
-      Bio: PropTypes.string,
-    }),
-    ImagePath: PropTypes.string,
-    Featured: PropTypes.bool,
-  }).isRequired,
-};
+      Genre: PropTypes.shape({
+        Name: PropTypes.string,
+        Description: PropTypes.string,
+      }),
+      Director: PropTypes.shape({
+        Name: PropTypes.string,
+        Bio: PropTypes.string,
+      }),
+      ImagePath: PropTypes.string,
+      Featured: PropTypes.bool,
+    }).isRequired,
+  },
+];

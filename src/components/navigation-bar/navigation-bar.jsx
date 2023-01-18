@@ -41,7 +41,12 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="ms-auto" as="li">
-                  <Nav.Link as={Link} to={`/login`} onClick={onLoggedOut}>
+                  <Nav.Link
+                    className="text-primary"
+                    as={Link}
+                    to={`/login`}
+                    onClick={onLoggedOut}
+                  >
                     Logout
                   </Nav.Link>
                 </Nav.Item>
