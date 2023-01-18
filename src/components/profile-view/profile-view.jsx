@@ -26,24 +26,29 @@ export const ProfileView = ({ user }) => {
   const password = useRef();
   const email = useRef();
   const birthday = useRef();
+  const submit = useRef();
 
   const removeReadOnly = (ref) => {
     switch (ref) {
       case "username":
         username.current.disabled = false;
         username.current.focus();
+        submit.current.disabled = false;
         break;
       case "password":
         password.current.disabled = false;
         password.current.focus();
+        submit.current.disabled = false;
         break;
       case "email":
         email.current.disabled = false;
         email.current.focus();
+        submit.current.disabled = false;
         break;
       case "birthday":
         birthday.current.disabled = false;
         birthday.current.focus();
+        submit.current.disabled = false;
         break;
     }
   };
@@ -53,6 +58,7 @@ export const ProfileView = ({ user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submitted");
+    location.reload();
   };
 
   return (
@@ -180,7 +186,9 @@ export const ProfileView = ({ user }) => {
         </Form.Group>
         <Row className="text-center">
           <Col md={6}>
-            <Button type="submit">Save</Button>
+            <Button ref={submit} type="submit" disabled={true}>
+              Save
+            </Button>
           </Col>
         </Row>
       </Form>
