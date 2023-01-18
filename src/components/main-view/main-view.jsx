@@ -110,7 +110,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : (
-                  <Col md={6}>
+                  <Col className="me-auto" md={6}>
                     <ProfileView user={user} />
                   </Col>
                 )}
