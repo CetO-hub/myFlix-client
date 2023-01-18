@@ -1,5 +1,10 @@
 import React from "react";
 
-export const ProfileView = () => {
-  return <div>ProfileView</div>;
+export const ProfileView = ({ user }) => {
+  return (
+    <>
+      <h1>Account Information</h1>
+      <h1>Favorite Movies</h1>
+    </>
+  );
 };
