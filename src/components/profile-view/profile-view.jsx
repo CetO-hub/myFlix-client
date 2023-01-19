@@ -5,10 +5,11 @@ import Col from "react-bootstrap/Col";
 import { MovieCard } from "../movie-card/movie-card";
 import { BsFillPencilFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
+import { CONSTANTS } from "../../constants";
 
-export const ProfileView = ({ user }) => {
+export const ProfileView = ({ user, token, onUpdate }) => {
   const [newUsername, setNewUsername] = useState(user.Username);
-  const [newPassword, setNewPassword] = useState("*****");
+  const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState(user.Email);
   const [newBirthday, setNewBirthday] = useState(
     new Date(user.Birthday).toLocaleString("en-CA", {
@@ -33,21 +34,19 @@ export const ProfileView = ({ user }) => {
       case "username":
         username.current.disabled = false;
         username.current.focus();
-        submit.current.disabled = false;
-        break;
-      case "password":
         password.current.disabled = false;
-        password.current.focus();
         submit.current.disabled = false;
         break;
       case "email":
         email.current.disabled = false;
         email.current.focus();
+        password.current.disabled = false;
         submit.current.disabled = false;
         break;
       case "birthday":
         birthday.current.disabled = false;
         birthday.current.focus();
+        password.current.disabled = false;
         submit.current.disabled = false;
         break;
     }
@@ -55,10 +54,50 @@ export const ProfileView = ({ user }) => {
 
   // Update data in data bank
 
+  const updateUser = (updatedUser) => {
+    setNewUsername(updatedUser.Username);
+    setNewEmail(updatedUser.Email);
+    setNewBirthday(
+      new Date(updatedUser.Birthday).toLocaleString("en-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submitted");
-    location.reload();
+
+    const data = {
+      Username: newUsername,
+      Password: newPassword,
+      Email: newEmail,
+      Birthday: newBirthday,
+    };
+
+    fetch(`${CONSTANTS.API_URL}/users/${user._id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((updatedUser) => {
+        console.log(updatedUser);
+
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        onUpdate(updatedUser);
+        updateUser(updatedUser);
+        alert("Account information updated");
+        window.location.reload();
+      })
+
+      .catch((e) => {
+        console.log(`Somenthing went wrong: ${e}`);
+      });
   };
 
   return (
@@ -73,6 +112,7 @@ export const ProfileView = ({ user }) => {
             <Form.Control
               type="text"
               ref={username}
+              minLength="5"
               disabled={true}
               value={newUsername}
               onInput={(e) => {
@@ -88,36 +128,6 @@ export const ProfileView = ({ user }) => {
               }}
               onClick={() => {
                 removeReadOnly("username");
-              }}
-            >
-              <BsFillPencilFill size={20} />
-            </Button>
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label className="fw-bold" column sm="2">
-            Password:
-          </Form.Label>
-          <Col md={4}>
-            <Form.Control
-              ref={password}
-              type="password"
-              disabled={true}
-              value={newPassword}
-              onInput={(e) => {
-                setNewPassword(e.target.value);
-              }}
-            />
-          </Col>
-          <Col md={2}>
-            <Button
-              variant="Light"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                removeReadOnly("password");
               }}
             >
               <BsFillPencilFill size={20} />
@@ -182,6 +192,23 @@ export const ProfileView = ({ user }) => {
             >
               <BsFillPencilFill size={20} />
             </Button>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label className="fw-bold" column sm="2">
+            Password:
+          </Form.Label>
+          <Col md={4}>
+            <Form.Control
+              ref={password}
+              type="password"
+              disabled
+              required
+              value={newPassword}
+              onInput={(e) => {
+                setNewPassword(e.target.value);
+              }}
+            />
           </Col>
         </Form.Group>
         <Row className="text-center">

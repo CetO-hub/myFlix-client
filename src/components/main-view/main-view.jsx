@@ -111,7 +111,13 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col className="me-auto" md={6}>
-                    <ProfileView user={user} />
+                    <ProfileView
+                      user={user}
+                      token={token}
+                      onUpdate={(user) => {
+                        setUser(user);
+                      }}
+                    />
                   </Col>
                 )}
               </>
