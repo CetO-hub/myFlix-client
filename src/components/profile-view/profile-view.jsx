@@ -7,7 +7,14 @@ import { BsFillPencilFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import { CONSTANTS } from "../../constants";
 
-export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
+export const ProfileView = ({
+  user,
+  token,
+  onUpdate,
+  onDelete,
+  movies,
+  handleRemoveFavoriteMovie,
+}) => {
   const [newUsername, setNewUsername] = useState(user.Username);
   const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState(user.Email);
@@ -124,10 +131,10 @@ export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
       <h1 className="my-5">Account Information</h1>
       <Form onSubmit={handleUpdate}>
         <Form.Group as={Row} className="mb-3">
-          <Form.Label className="fw-bold" column sm="2">
+          <Form.Label className="fw-bold" column sm="2" md={1}>
             Username:
           </Form.Label>
-          <Col md={4}>
+          <Col md={2}>
             <Form.Control
               type="text"
               ref={username}
@@ -155,10 +162,10 @@ export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
         </Form.Group>
 
         <Form.Group as={Row} className="mb-3">
-          <Form.Label className="fw-bold" column sm="2">
+          <Form.Label className="fw-bold" column sm="2" md={1}>
             Email:
           </Form.Label>
-          <Col md={4}>
+          <Col md={2}>
             <Form.Control
               ref={email}
               type="email"
@@ -185,10 +192,10 @@ export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
         </Form.Group>
 
         <Form.Group as={Row} className="mb-5">
-          <Form.Label className="fw-bold" column sm="2">
+          <Form.Label className="fw-bold" column sm="2" md={1}>
             Birthday:
           </Form.Label>
-          <Col md={4}>
+          <Col md={2}>
             <Form.Control
               ref={birthday}
               type="date"
@@ -214,10 +221,10 @@ export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
           </Col>
         </Form.Group>
         <Form.Group as={Row} className="mb-3">
-          <Form.Label className="fw-bold" column sm="2">
+          <Form.Label className="fw-bold" column sm="2" md={1}>
             Password:
           </Form.Label>
-          <Col md={4}>
+          <Col md={2}>
             <Form.Control
               ref={password}
               type="password"
@@ -239,7 +246,7 @@ export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
         </Row>
       </Form>
       <Row>
-        <Col className="ms-auto" md={9}>
+        <Col className="ms-auto" md={10}>
           <Button
             className="mt-3"
             style={{ color: "red", "font-size": "0.7rem" }}
@@ -255,15 +262,23 @@ export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
       {favoriteMovies.length === 0 ? (
         <div>List is empty</div>
       ) : (
-        <>
-          {favoriteMovies.map((movie) => {
-            return (
-              <Col key={movie.id} className="mb-5" md={3}>
-                <MovieCard movies={movie} />
-              </Col>
-            );
-          })}
-        </>
+        <Row md={12}>
+          <>
+            {favoriteMovies.map((movie) => {
+              return (
+                <Col key={movie.id} className="mb-5" md={3}>
+                  <MovieCard
+                    movies={movie}
+                    user={user}
+                    handleRemoveFavoriteMovie={() =>
+                      handleRemoveFavoriteMovie(movie.id)
+                    }
+                  />
+                </Col>
+              );
+            })}
+          </>
+        </Row>
       )}
     </>
   );

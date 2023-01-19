@@ -38,6 +38,47 @@ export const MainView = () => {
       });
   }, [token]);
 
+  const isFavorite = (movieId) => {
+    const data = {
+      Username: user.Username,
+    };
+
+    fetch(`${CONSTANTS.API_URL}/users/${movieId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleRemoveFavoriteMovie = (movieId) => {
+    console.log(movieId);
+    fetch(`${CONSTANTS.API_URL}/users/${movieId}/${user.Username}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Context-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <BrowserRouter>
       <Row>
@@ -110,7 +151,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : (
-                  <Col className="me-auto" md={6}>
+                  <Col className="me-auto">
                     <ProfileView
                       user={user}
                       token={token}
@@ -123,6 +164,7 @@ export const MainView = () => {
                         setToken(null);
                         localStorage.clear();
                       }}
+                      handleRemoveFavoriteMovie={handleRemoveFavoriteMovie}
                     />
                   </Col>
                 )}
@@ -142,7 +184,14 @@ export const MainView = () => {
                     {movies.map((movie) => {
                       return (
                         <Col key={movie.id} className="mb-5" md={3}>
-                          <MovieCard movies={movie} />
+                          <MovieCard
+                            movies={movie}
+                            user={user}
+                            isFavorite={isFavorite}
+                            handleRemoveFavoriteMovie={() =>
+                              handleRemoveFavoriteMovie(movie.id)
+                            }
+                          />
                         </Col>
                       );
                     })}
