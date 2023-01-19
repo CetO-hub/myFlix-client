@@ -117,6 +117,11 @@ export const MainView = () => {
                       onUpdate={(user) => {
                         setUser(user);
                       }}
+                      onDelete={() => {
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                      }}
                     />
                   </Col>
                 )}

@@ -7,7 +7,7 @@ import { BsFillPencilFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import { CONSTANTS } from "../../constants";
 
-export const ProfileView = ({ user, token, onUpdate }) => {
+export const ProfileView = ({ user, token, onUpdate, onDelete }) => {
   const [newUsername, setNewUsername] = useState(user.Username);
   const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState(user.Email);
@@ -66,7 +66,7 @@ export const ProfileView = ({ user, token, onUpdate }) => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
 
     const data = {
@@ -86,24 +86,41 @@ export const ProfileView = ({ user, token, onUpdate }) => {
     })
       .then((response) => response.json())
       .then((updatedUser) => {
-        console.log(updatedUser);
-
         localStorage.setItem("user", JSON.stringify(updatedUser));
         onUpdate(updatedUser);
         updateUser(updatedUser);
         alert("Account information updated");
         window.location.reload();
       })
-
       .catch((e) => {
         console.log(`Somenthing went wrong: ${e}`);
       });
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    if (confirm("Do you really want to delete this account?") === true) {
+      fetch(`${CONSTANTS.API_URL}/users/${user.Username}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }).catch((e) => {
+        console.log(e);
+      });
+
+      alert(`User with the username ${user.Username} has been deleted`);
+      onDelete();
+      window.location.reload();
+    }
+  };
+
   return (
     <>
       <h1 className="my-5">Account Information</h1>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleUpdate}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label className="fw-bold" column sm="2">
             Username:
@@ -211,14 +228,26 @@ export const ProfileView = ({ user, token, onUpdate }) => {
             />
           </Col>
         </Form.Group>
-        <Row className="text-center">
-          <Col md={6}>
+        <Row>
+          <Col className="me-auto" md={9}>
             <Button ref={submit} type="submit" disabled={true}>
               Save
             </Button>
           </Col>
         </Row>
       </Form>
+      <Row>
+        <Col className="ms-auto" md={9}>
+          <Button
+            className="mt-3"
+            style={{ color: "red", "font-size": "0.7rem" }}
+            variant="link"
+            onClick={handleDelete}
+          >
+            Delete account permanently
+          </Button>
+        </Col>
+      </Row>
 
       <h1 className="my-5">Favorite Movies</h1>
       {favoriteMovies.length === 0 ? (
