@@ -61,7 +61,6 @@ export const MainView = () => {
   };
 
   const handleRemoveFavoriteMovie = (movieId) => {
-    console.log(movieId);
     fetch(`${CONSTANTS.API_URL}/users/${movieId}/${user.Username}`, {
       method: "DELETE",
       headers: {
@@ -72,7 +71,6 @@ export const MainView = () => {
       .then((response) => response.json())
       .then((data) => {
         setUser(data);
-        console.log(data);
       })
       .catch((e) => {
         console.log(e);
