@@ -114,6 +114,7 @@ export const MainView = () => {
                     <ProfileView
                       user={user}
                       token={token}
+                      movies={movies}
                       onUpdate={(user) => {
                         setUser(user);
                       }}

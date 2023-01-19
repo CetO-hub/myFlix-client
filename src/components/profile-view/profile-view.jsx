@@ -7,7 +7,7 @@ import { BsFillPencilFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import { CONSTANTS } from "../../constants";
 
-export const ProfileView = ({ user, token, onUpdate, onDelete }) => {
+export const ProfileView = ({ user, token, onUpdate, onDelete, movies }) => {
   const [newUsername, setNewUsername] = useState(user.Username);
   const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState(user.Email);
@@ -21,7 +21,9 @@ export const ProfileView = ({ user, token, onUpdate, onDelete }) => {
 
   // Global variables
 
-  const favoriteMovies = user.FavoriteMovies;
+  const favoriteMovies = movies.filter((m) =>
+    user.FavoriteMovies.includes(m._id)
+  );
 
   const username = useRef();
   const password = useRef();

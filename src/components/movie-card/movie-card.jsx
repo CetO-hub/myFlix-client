@@ -1,18 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, CardImg } from "react-bootstrap";
+import { Card, CardImg, Icon } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { AiOutlineHeart } from "react-icons/ai";
 
 export const MovieCard = ({ movies }) => {
   return (
     <>
       <Card className="h-100" variant="link">
-        <CardImg variant="top" src={movies.ImagePath} />
-        <Card.Body>
+        <CardImg variant="top" src={movies.ImagePath} height="428px" />
+        <Card.ImgOverlay>
+          <AiOutlineHeart size={60} color="red" style={{ cursor: "pointer" }} />
+        </Card.ImgOverlay>
+        <Card.Body className="d-flex flex-column justify-content-between">
           <Card.Title className="display-6">{movies.Title}</Card.Title>
           <Card.Text>{movies.Description}</Card.Text>
-          <Link to={`/movies/${encodeURIComponent(movies.id)}`}>
+          <Link
+            style={{ "z-index": "999" }}
+            to={`/movies/${encodeURIComponent(movies.id)}`}
+          >
             <Button variant="link">Open</Button>
           </Link>
         </Card.Body>
