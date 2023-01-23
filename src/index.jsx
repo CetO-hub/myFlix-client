@@ -7,11 +7,7 @@ import "./index.scss";
 import Container from "react-bootstrap/Container";
 
 const MyFlixApplication = () => {
-  return (
-    <Container>
-      <MainView />
-    </Container>
-  );
+  return <MainView />;
 };
 
 const container = document.querySelector("#root");

@@ -12,43 +12,53 @@ export const MovieView = ({ movies }) => {
   return (
     <>
       <div>
-        <img src={movie.ImagePath} className="w-100" />
+        <img
+          src={movie.ImagePath}
+          className="mx-auto d-block mb-3"
+          width="400px"
+          style={{ objectFit: "contain" }}
+        />
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Title: </span>
         <span>{movie.Title}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Description: </span>
         <span>{movie.Description}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Genre: </span>
         <span>{movie.Genre.Name}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Genre-Description: </span>
         <span>{movie.Genre.Description}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Directror: </span>
         <span>{movie.Director.Name}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Directror-Bio: </span>
         <span>{movie.Director.Bio}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Directror-Birth: </span>
         <span>{movie.Director.Birth}</span>
       </div>
-      <div>
+      <div className="mb-3">
         <span className="fw-bold">Directror-Death: </span>
         <span>{movie.Director.Death}</span>
       </div>
-      <Link to={`/`}>
-        <Button variant="primary">Back</Button>
-      </Link>
+      <div className="d-flex gap-2 mb-3">
+        <Link to={`/`}>
+          <Button variant="primary">Home</Button>
+        </Link>
+        <Link to={`/profile`}>
+          <Button variant="primary">Profile</Button>
+        </Link>
+      </div>
     </>
   );
 };

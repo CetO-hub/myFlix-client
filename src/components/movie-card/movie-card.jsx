@@ -15,36 +15,52 @@ export const MovieCard = ({
 
   return (
     <>
-      <Card className="h-100" variant="link">
-        <CardImg variant="top" src={movies.ImagePath} height="428px" />
-        <Card.ImgOverlay>
-          {movieFavorite ? (
-            <AiFillHeart
-              size={60}
-              color="red"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleRemoveFavoriteMovie(movies.id)}
-            />
-          ) : (
-            <AiOutlineHeart
-              onClick={() => isFavorite(movies.id)}
-              size={60}
-              color="red"
-              style={{ cursor: "pointer" }}
-            />
-          )}
-        </Card.ImgOverlay>
-        <Card.Body className="d-flex flex-column justify-content-between">
-          <Card.Title className="display-6">{movies.Title}</Card.Title>
-          <Card.Text>{movies.Description}</Card.Text>
-          <Link
-            style={{ "z-index": "999" }}
-            to={`/movies/${encodeURIComponent(movies.id)}`}
-          >
-            <Button variant="link">Open</Button>
-          </Link>
-        </Card.Body>
-      </Card>
+      <Link
+        className="text-reset"
+        style={{ zIndex: "-1", textDecoration: "none" }}
+        to={`/movies/${encodeURIComponent(movies.id)}`}
+      >
+        <Card className="h-100" variant="link">
+          <CardImg variant="top" src={movies.ImagePath} height="428px" />
+          <Card.Body className="">
+            {movieFavorite ? (
+              <AiFillHeart
+                size={30}
+                color="red"
+                style={{
+                  cursor: "pointer",
+                  zIndex: "999",
+                  marginBottom: "1rem",
+                }}
+                onClick={(e) => {
+                  handleRemoveFavoriteMovie(movies.id);
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+              />
+            ) : (
+              <AiOutlineHeart
+                onClick={(e) => {
+                  isFavorite(movies.id);
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+                size={30}
+                color="red"
+                style={{
+                  cursor: "pointer",
+                  zIndex: "999",
+                  marginBottom: "1rem",
+                }}
+              />
+            )}
+
+            <Card.Title className="fw-bold">{movies.Title}</Card.Title>
+
+            <Card.Text className="mt-5">{movies.Description}</Card.Text>
+          </Card.Body>
+        </Card>
+      </Link>
     </>
   );
 };
