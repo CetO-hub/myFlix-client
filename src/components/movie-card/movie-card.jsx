@@ -1,21 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, CardImg } from "react-bootstrap";
+import { Card, CardImg, Icon } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-export const MovieCard = ({ movies, onMovieClick }) => {
+export const MovieCard = ({
+  movies,
+  isFavorite,
+  user,
+  handleRemoveFavoriteMovie,
+}) => {
+  let movieFavorite = user.FavoriteMovies.includes(movies.id);
+
   return (
     <>
-      <Card
-        className="h-100"
-        onClick={() => {
-          onMovieClick(movies);
-        }}
-        variant="link"
-      >
-        <CardImg variant="top" src={movies.ImagePath} />
-        <Card.Body>
+      <Card className="h-100" variant="link">
+        <CardImg variant="top" src={movies.ImagePath} height="428px" />
+        <Card.ImgOverlay>
+          {movieFavorite ? (
+            <AiFillHeart
+              size={60}
+              color="red"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleRemoveFavoriteMovie(movies.id)}
+            />
+          ) : (
+            <AiOutlineHeart
+              onClick={() => isFavorite(movies.id)}
+              size={60}
+              color="red"
+              style={{ cursor: "pointer" }}
+            />
+          )}
+        </Card.ImgOverlay>
+        <Card.Body className="d-flex flex-column justify-content-between">
           <Card.Title className="display-6">{movies.Title}</Card.Title>
           <Card.Text>{movies.Description}</Card.Text>
+          <Link
+            style={{ "z-index": "999" }}
+            to={`/movies/${encodeURIComponent(movies.id)}`}
+          >
+            <Button variant="link">Open</Button>
+          </Link>
         </Card.Body>
       </Card>
     </>
@@ -38,5 +65,4 @@ MovieCard.propTypes = {
     ImagePath: PropTypes.string,
     Featured: PropTypes.bool,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
 };
