@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, CardImg, Icon } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import { Card, CardImg } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 

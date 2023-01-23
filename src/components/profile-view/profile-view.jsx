@@ -258,7 +258,7 @@ export const ProfileView = ({
         <Col className="ms-auto" md={10}>
           <Button
             className="mt-3"
-            style={{ color: "red", "font-size": "0.7rem" }}
+            style={{ color: "red", fontSize: "0.7rem" }}
             variant="link"
             onClick={handleDelete}
           >

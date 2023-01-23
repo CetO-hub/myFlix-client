@@ -8,7 +8,6 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
