@@ -1,0 +1,13 @@
+.input {
+  width: 100%;
+  border-radius: 20px;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+  border-color: rgba($color: #131313, $alpha: 1);
+}
+
+.input:hover,
+.input:focus {
+  border-color: rgba($color: #131313, $alpha: 0.5);
+  outline: none;
+}

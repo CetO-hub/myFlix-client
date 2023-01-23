@@ -10,6 +10,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { AiOutlineSearch } from "react-icons/ai";
+import "./main-view.scss";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -17,6 +19,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch movie list from DB upon user login and each time the token changes
   useEffect(() => {
@@ -81,6 +84,12 @@ export const MainView = () => {
         console.log(e);
       });
   };
+
+  // Filter movies array for the search term
+
+  const searchMovie = movies.filter((movie) => {
+    return movie.Title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   // Routing conditions
 
@@ -187,20 +196,63 @@ export const MainView = () => {
                     <div>List is empty</div>
                   ) : (
                     <>
-                      {movies.map((movie) => {
-                        return (
-                          <Col key={movie.id} className="mb-5" md={3}>
-                            <MovieCard
-                              movies={movie}
-                              user={user}
-                              isFavorite={isFavorite}
-                              handleRemoveFavoriteMovie={() =>
-                                handleRemoveFavoriteMovie(movie.id)
-                              }
-                            />
-                          </Col>
-                        );
-                      })}
+                      <Col
+                        md={6}
+                        style={{ position: "relative", textAlign: "center" }}
+                      >
+                        <input
+                          className="input"
+                          type="text"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <span>
+                          <AiOutlineSearch
+                            size={25}
+                            style={{
+                              position: "absolute",
+                              top: "5px",
+                              left: "20px",
+                            }}
+                          />
+                        </span>
+                      </Col>
+                      {searchTerm !== "" ? (
+                        <Row>
+                          {searchMovie.map((movie) => {
+                            return (
+                              <Col key={movie.id} className="mb-5" md={3}>
+                                <MovieCard
+                                  movies={movie}
+                                  user={user}
+                                  isFavorite={isFavorite}
+                                  handleRemoveFavoriteMovie={() =>
+                                    handleRemoveFavoriteMovie(movie.id)
+                                  }
+                                />
+                              </Col>
+                            );
+                          })}
+                        </Row>
+                      ) : (
+                        <Row>
+                          {movies.map((movie) => {
+                            return (
+                              <Col key={movie.id} className="mb-5" md={3}>
+                                <MovieCard
+                                  movies={movie}
+                                  user={user}
+                                  isFavorite={isFavorite}
+                                  handleRemoveFavoriteMovie={() =>
+                                    handleRemoveFavoriteMovie(movie.id)
+                                  }
+                                />
+                              </Col>
+                            );
+                          })}
+                        </Row>
+                      )}
                     </>
                   )}
                 </>
