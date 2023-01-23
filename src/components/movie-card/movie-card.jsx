@@ -24,6 +24,7 @@ export const MovieCard = ({
           <CardImg variant="top" src={movies.ImagePath} height="428px" />
           <Card.Body className="">
             {movieFavorite ? (
+              // Display filled heart icon when movie added to favorite list
               <AiFillHeart
                 size={30}
                 color="red"
@@ -39,6 +40,7 @@ export const MovieCard = ({
                 }}
               />
             ) : (
+              // Display heart-outline icon when movie is not in the favorite list
               <AiOutlineHeart
                 onClick={(e) => {
                   isFavorite(movies.id);

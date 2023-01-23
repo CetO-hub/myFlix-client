@@ -5,9 +5,13 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
+  // Use URL parameter (movieId) to filter the movies list and find a certain movie
+
   const { movieId } = useParams();
 
   const movie = movies.find((item) => movieId === item.id);
+
+  // Display the movie
 
   return (
     <>

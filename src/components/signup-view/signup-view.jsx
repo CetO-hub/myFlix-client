@@ -9,6 +9,8 @@ export const SignupView = () => {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
+  // Create user in the DB
+
   const handleSubmit = (e) => {
     e.preventDefault();
 

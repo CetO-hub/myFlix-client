@@ -8,6 +8,7 @@ export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Upon submit of login data, fetch the /login endpoint and store user data and user token.
   const handleSubmit = (e) => {
     e.preventDefault();
 

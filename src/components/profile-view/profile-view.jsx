@@ -15,6 +15,7 @@ export const ProfileView = ({
   movies,
   handleRemoveFavoriteMovie,
 }) => {
+  // Store user data the the state
   const [newUsername, setNewUsername] = useState(user.Username);
   const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState(user.Email);
@@ -26,17 +27,21 @@ export const ProfileView = ({
     })
   );
 
-  // Global variables
+  // Filter movies list according to the favorite movies id
 
   const favoriteMovies = movies.filter((m) =>
     user.FavoriteMovies.includes(m._id)
   );
+
+  // Create references
 
   const username = useRef();
   const password = useRef();
   const email = useRef();
   const birthday = useRef();
   const submit = useRef();
+
+  // Enable data input fields
 
   const removeReadOnly = (ref) => {
     switch (ref) {
@@ -61,7 +66,7 @@ export const ProfileView = ({
     }
   };
 
-  // Update data in data bank
+  // Set state to the updated user
 
   const updateUser = (updatedUser) => {
     setNewUsername(updatedUser.Username);
@@ -74,6 +79,8 @@ export const ProfileView = ({
       })
     );
   };
+
+  // Update DB and set user data to the updated user
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -105,6 +112,8 @@ export const ProfileView = ({
         console.log(`Somenthing went wrong: ${e}`);
       });
   };
+
+  // Delete user upon confirmation
 
   const handleDelete = (e) => {
     e.preventDefault();

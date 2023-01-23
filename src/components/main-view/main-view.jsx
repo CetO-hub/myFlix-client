@@ -19,6 +19,7 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
 
+  // Fetch movie list from DB upon user login and each time the token changes
   useEffect(() => {
     if (!token) {
       return;
@@ -38,6 +39,8 @@ export const MainView = () => {
         setMovies(fetchedMovies);
       });
   }, [token]);
+
+  // Update DB with an user's favorite movie by adding it
 
   const isFavorite = (movieId) => {
     const data = {
@@ -61,6 +64,8 @@ export const MainView = () => {
       });
   };
 
+  // Update DB with an user's favorite movie by removing it
+
   const handleRemoveFavoriteMovie = (movieId) => {
     fetch(`${CONSTANTS.API_URL}/users/${movieId}/${user.Username}`, {
       method: "DELETE",
@@ -77,6 +82,8 @@ export const MainView = () => {
         console.log(e);
       });
   };
+
+  // Routing conditions
 
   return (
     <BrowserRouter>
